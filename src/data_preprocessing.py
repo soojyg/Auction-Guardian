@@ -4,7 +4,6 @@ import os
 
 # Create folders if not exist
 os.makedirs('data/processed', exist_ok=True)
-os.makedirs('figures', exist_ok=True)
 
 # Function to explore data
 def explore_data(df, name):
@@ -56,6 +55,10 @@ print(f"\nMissing Values in Merged Test Data after cleaning:\n{test_merged_df.is
 # Arrange the time column to ascending order (per bidder_id)
 train_merged_df.sort_values(by=['bidder_id', 'time'], inplace=True)
 test_merged_df.sort_values(by=['bidder_id', 'time'], inplace=True)
+
+# Convert to datetime
+train_merged_df['datetime'] = pd.to_datetime(train_merged_df['time'], unit='ns')
+test_merged_df['datetime'] = pd.to_datetime(test_merged_df['time'], unit='ns')
 
 # Print the first 5 rows of the cleaned data
 print(f"\nFirst 5 rows:\n{train_merged_df.head()}")
