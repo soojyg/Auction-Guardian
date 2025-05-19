@@ -44,6 +44,11 @@ for col in no_bid_cols:
     else:  # numeric type (like bid_id, time)
         train_merged_df[col] = train_merged_df[col].fillna(-1)
         test_merged_df[col] = test_merged_df[col].fillna(-1)
+        
+# Add binary indicator for missing 'country'
+train_merged_df['is_country_missing'] = train_merged_df['country'].isnull().astype(int)
+test_merged_df['is_country_missing'] = test_merged_df['country'].isnull().astype(int)
+
 # The missing country even when other bid fields exist likely means that the bidder's IP couldn’t be geolocated. So we can fill it with 'unknown'.
 train_merged_df['country'] = train_merged_df['country'].fillna('unknown')
 test_merged_df['country'] = test_merged_df['country'].fillna('unknown')
